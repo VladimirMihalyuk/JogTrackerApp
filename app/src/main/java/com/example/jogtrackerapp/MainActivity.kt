@@ -3,26 +3,23 @@ package com.example.jogtrackerapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.jogtrackerapp.app.SharedPreferencesWrapper
-import com.example.jogtrackerapp.netwok.joggingApi.JoggingService
-import com.example.jogtrackerapp.netwok.login.LoginService
+import com.example.jogtrackerapp.app.JogApplication
+import com.example.jogtrackerapp.netwok.joggingApi.JoggingInterface
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var joggingService: JoggingInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val service = LoginService.provideApi()
+        (application as JogApplication).appComponent.inject(this)
 
-        val spWrapper = SharedPreferencesWrapper(application)
-        spWrapper.setLogin("hello")
-
-        val joggingService = JoggingService.provideApi(
-            JoggingService.okHttpClient(service, spWrapper)
-        )
         GlobalScope.launch {
             val responseData = joggingService.getData().await()
             if (responseData.isSuccessful) {
