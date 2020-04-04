@@ -52,7 +52,6 @@ class TokenInterceptor constructor(private val spWrapper: SharedPreferencesWrapp
 class TokenAuthenticator constructor(private val loginInterface: LoginInterface,
                                      private val spWrapper: SharedPreferencesWrapper): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        Log.d("WTF", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         val login = spWrapper.getLogin()
         val tokenResp = loginInterface.getToken(login).execute()
 
