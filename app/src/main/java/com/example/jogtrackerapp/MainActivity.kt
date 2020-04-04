@@ -3,7 +3,8 @@ package com.example.jogtrackerapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.jogtrackerapp.netwok.JoggingApi.JoggingService
+import com.example.jogtrackerapp.app.SharedPreferencesWrapper
+import com.example.jogtrackerapp.netwok.joggingApi.JoggingService
 import com.example.jogtrackerapp.netwok.login.LoginService
 import com.example.jogtrackerapp.netwok.models.login.ResponseToken
 import kotlinx.coroutines.GlobalScope
@@ -20,10 +21,12 @@ class MainActivity : AppCompatActivity() {
 
         val service = LoginService.provideApi()
 
+        val spWrapper = SharedPreferencesWrapper(application)
+
         service.getToken("hello").enqueue(
                 object : Callback<ResponseToken> {
-                    override fun onFailure(call: Call<ResponseToken>?, t: Throwable?) {
-                    }
+                    override fun onFailure(call: Call<ResponseToken>?, t: Throwable?) {}
+
                     override fun onResponse(call: Call<ResponseToken>?,
                                             response: Response<ResponseToken>?) {
 
@@ -32,11 +35,15 @@ class MainActivity : AppCompatActivity() {
                             if(body?.response?.accessToken != null
                                 && body.response.tokenType != null) {
 
-                                val joggingService = JoggingService.provideApi()
+                                spWrapper.setToken(body.response.tokenType +
+                                        " " + body.response.accessToken)
+
+                                val joggingService
+                                        = JoggingService.provideApi(
+                                    JoggingService.okHttpClient(spWrapper))
                                 GlobalScope.launch {
-                                    val responseData = joggingService.getData(
-                                        body.response.tokenType +
-                                                " " + body.response.accessToken).await()
+                                    val responseData
+                                            = joggingService.getData().await()
                                     if(responseData.isSuccessful){
                                         Log.d("WTF", "${responseData.body()}")
                                     }else{
