@@ -3,43 +3,48 @@ package com.example.jogtrackerapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.jogtrackerapp.app.JogApplication
-import com.example.jogtrackerapp.netwok.joggingApi.JoggingInterface
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.example.jogtrackerapp.logging.LoggingFragment
+
 
 class MainActivity : AppCompatActivity() {
+    val fragmentController: FragmentController = FragmentController()
 
-    @Inject
-    lateinit var joggingService: JoggingInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (application as JogApplication).appComponent.inject(this)
-
-        GlobalScope.launch {
-            val responseData = joggingService.getData().await()
-            if (responseData.isSuccessful) {
-                Log.d("WTF", "${responseData.body()}")
+        fragmentController.nextFragment.observe(this, Observer<Fragment> {
+            if (it is LoggingFragment) {
+                showDefaultFragment(it)
+                Log.d("WTF", "SHIT")
             } else {
-                Log.d("WTF", "DAta:${responseData.code()}")
+                showFragment(it)
             }
-
-            val responseData2 = joggingService.getData().await()
-            if (responseData2.isSuccessful) {
-                Log.d("WTF", "${responseData.body()}")
-            } else {
-                Log.d("WTF", "DAta:${responseData.code()}")
-            }
-        }
-
+        })
 
 
     }
 
+    private fun showDefaultFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.base_fragment_layout, fragment
+            )
+            .commit()
+    }
 
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(
+                R.id.base_fragment_layout, fragment
+            )
+            .commit()
+    }
 
 }
