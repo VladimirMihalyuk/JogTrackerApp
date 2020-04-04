@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         fragmentController.nextFragment.observe(this, Observer<Fragment> {
             if (it is LoggingFragment) {
                 showDefaultFragment(it)
-                Log.d("WTF", "SHIT")
             } else {
+                Log.d("WTF", "SHIT")
                 showFragment(it)
             }
         })

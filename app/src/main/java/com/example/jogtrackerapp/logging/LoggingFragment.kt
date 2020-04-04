@@ -2,6 +2,7 @@ package com.example.jogtrackerapp.logging
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,15 @@ class LoggingFragment : Fragment() {
                 Toast.makeText(view.context, "Wrong login", Toast.LENGTH_SHORT).show()
                 viewModel.resetError()
             }
+        })
+
+        viewModel.nextPage.observe(viewLifecycleOwner, Observer { it ->
+            if(it == true){
+                Log.d("WTF", "NEXT")
+                (activity as MainActivity).fragmentController.openAllRuns()
+                viewModel.resetNextPage()
+            }
+
         })
 
         return view

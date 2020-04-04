@@ -1,5 +1,6 @@
 package com.example.jogtrackerapp.logging
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class LoggingViewModel @Inject constructor (
 
     private val _nextPage = MutableLiveData<Boolean>()
     val nextPage:LiveData<Boolean>
-        get() = _error
+        get() = _nextPage
 
     fun resetNextPage(){
         _error.value = false
@@ -44,10 +45,11 @@ class LoggingViewModel @Inject constructor (
                     && response.body()?.response?.accessToken != null
                     && response.body()?.response?.tokenType != null){
 
-                    _nextPage.value = true
                     sharedPreferencesWrapper.setLogin(uuid)
                     sharedPreferencesWrapper.setToken(response.body()?.response?.tokenType
                             + " " + response.body()?.response?.accessToken)
+
+                    _nextPage.value = true
 
                 }else{
                     _error.value = true

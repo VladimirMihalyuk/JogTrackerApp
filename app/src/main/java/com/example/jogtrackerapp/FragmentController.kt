@@ -3,6 +3,7 @@ package com.example.jogtrackerapp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.jogtrackerapp.allRuns.AllRunsFragment
 import com.example.jogtrackerapp.logging.LoggingFragment
 
 class FragmentController {
@@ -18,9 +19,9 @@ class FragmentController {
         goToNextFragment.value = newFragment
     }
 
-//    fun openLogin() {
-//        pushNextFragment(LoginFragment())
-//    }
+    fun openAllRuns() {
+        pushNextFragment(AllRunsFragment())
+    }
 
 
 }
