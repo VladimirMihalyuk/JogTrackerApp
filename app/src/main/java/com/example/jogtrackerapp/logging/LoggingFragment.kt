@@ -52,7 +52,6 @@ class LoggingFragment : Fragment() {
 
         viewModel.nextPage.observe(viewLifecycleOwner, Observer { it ->
             if(it == true){
-                Log.d("WTF", "NEXT")
                 (activity as MainActivity).fragmentController.openAllRuns()
                 viewModel.resetNextPage()
             }

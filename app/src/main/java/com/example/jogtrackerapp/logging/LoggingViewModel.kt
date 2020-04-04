@@ -30,7 +30,7 @@ class LoggingViewModel @Inject constructor (
         get() = _nextPage
 
     fun resetNextPage(){
-        _error.value = false
+        _nextPage.value = false
     }
 
     fun logIn(uuid: String){
