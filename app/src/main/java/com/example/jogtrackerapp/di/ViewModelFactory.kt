@@ -2,6 +2,7 @@ package com.example.jogtrackerapp.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.jogtrackerapp.allRuns.AllRunsViewModel
 import com.example.jogtrackerapp.logging.LoggingViewModel
 import dagger.Binds
 import dagger.MapKey
@@ -33,5 +34,10 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(LoggingViewModel::class)
-    internal abstract fun postActivityViewModel(viewModel: LoggingViewModel): ViewModel
+    internal abstract fun loggingViewModel(viewModel: LoggingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllRunsViewModel::class)
+    internal abstract fun allRunsViewModel(viewModel: AllRunsViewModel): ViewModel
 }
