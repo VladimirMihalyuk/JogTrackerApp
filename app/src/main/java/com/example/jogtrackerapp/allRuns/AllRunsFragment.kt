@@ -67,6 +67,11 @@ class AllRunsFragment : Fragment() {
         viewModel.loadAllRuns()
 
 
+        view.addNew.setOnClickListener{
+            (activity as MainActivity).fragmentController.openAddNewFragment()
+        }
+
+
         return view
     }
 

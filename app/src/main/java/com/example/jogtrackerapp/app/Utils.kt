@@ -15,6 +15,6 @@ fun Int.parseToTime(): String{
 fun Long.getDate(): String {
     val formatter = SimpleDateFormat("dd/MM/yyyy")
     val calendar = Calendar.getInstance()
-    calendar.timeInMillis = this * 1000
+    calendar.timeInMillis = this
     return formatter.format(calendar.time)
 }

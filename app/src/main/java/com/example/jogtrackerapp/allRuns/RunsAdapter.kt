@@ -36,7 +36,7 @@ class RecyclerAdaptor(): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
         fun bind(jogsItem: JogsItem){
             distance.text = "Distancee: ${jogsItem?.distance ?: 0} m"
             time.text = "Time: ${(jogsItem?.time ?: 0).parseToTime()}"
-            date.text = "Date: ${(jogsItem?.date ?: 0).getDate()}"
+            date.text = "Date: ${((jogsItem?.date ?: 0) * 1000).getDate()}"
         }
     }
 }
