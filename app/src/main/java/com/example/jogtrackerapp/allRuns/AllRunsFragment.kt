@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.jogtrackerapp.activity.MainActivity
 
 import com.example.jogtrackerapp.R
@@ -43,13 +44,13 @@ class AllRunsFragment : Fragment() {
 
         view.list.adapter = recyclerAdaptor
 
-        viewModel = ViewModelProvider(this, viewModelFactory)
-            .get(AllRunsViewModel::class.java)
+        viewModel = activity?.run {
+            ViewModelProvider(this, viewModelFactory)[AllRunsViewModel::class.java]
+        }?: throw Exception("Invalid Activity")
 
 
         viewModel.allRuns.observe(viewLifecycleOwner, Observer {
             if(it != null){
-                Log.d("WTF", "$it")
                 recyclerAdaptor.submitList(it)
             }
         })
