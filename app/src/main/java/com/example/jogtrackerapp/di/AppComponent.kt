@@ -1,7 +1,7 @@
 package com.example.jogtrackerapp.di
 
 import android.app.Application
-import com.example.jogtrackerapp.addNewRun.AddNewRunFragment
+import com.example.jogtrackerapp.addNewRunOrUpdate.AddNewRunOrUpdateFragment
 import com.example.jogtrackerapp.allRuns.AllRunsFragment
 import com.example.jogtrackerapp.logging.LoggingFragment
 import dagger.BindsInstance
@@ -18,7 +18,7 @@ interface AppComponent {
 
     fun inject(target: AllRunsFragment)
 
-    fun inject(target: AddNewRunFragment)
+    fun inject(target: AddNewRunOrUpdateFragment)
 
     @Component.Builder
     interface Builder {

@@ -28,7 +28,7 @@ class AllRunsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel:AllRunsViewModel
-    val recyclerAdaptor = RecyclerAdaptor()
+    lateinit var recyclerAdaptor:RecyclerAdaptor
     lateinit var constraintLayout:ConstraintLayout
     lateinit var progressBar: ProgressBar
 
@@ -42,12 +42,16 @@ class AllRunsFragment : Fragment() {
         constraintLayout = view.constraintLayout
         progressBar = view.progressBar
 
-        view.list.adapter = recyclerAdaptor
-
         viewModel = activity?.run {
             ViewModelProvider(this, viewModelFactory)[AllRunsViewModel::class.java]
         }?: throw Exception("Invalid Activity")
 
+        recyclerAdaptor = RecyclerAdaptor(){it ->
+            (activity as MainActivity).fragmentController.openAddNewFragment()
+            viewModel.setJog(it)
+        }
+
+        view.list.adapter = recyclerAdaptor
 
         viewModel.allRuns.observe(viewLifecycleOwner, Observer {
             if(it != null){
@@ -70,7 +74,6 @@ class AllRunsFragment : Fragment() {
         view.addNew.setOnClickListener{
             (activity as MainActivity).fragmentController.openAddNewFragment()
         }
-
 
         return view
     }

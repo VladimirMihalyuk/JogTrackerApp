@@ -1,4 +1,4 @@
-package com.example.jogtrackerapp.addNewRun
+package com.example.jogtrackerapp.addNewRunOrUpdate
 
 
 import android.app.DatePickerDialog
@@ -23,7 +23,7 @@ import androidx.lifecycle.Observer
 /**
  * A simple [Fragment] subclass.
  */
-class AddNewRunFragment : Fragment() {
+class AddNewRunOrUpdateFragment : Fragment() {
 
     private val c = Calendar.getInstance()
     private val year = c.get(Calendar.YEAR)
@@ -65,15 +65,17 @@ class AddNewRunFragment : Fragment() {
         }
 
         //0 - Empty
-        //1 - Ok
+        //1 - Ok add
         //2 - No date
         //3 - Network error
+        //4 - Ok update
         viewModel.operationCode.observe(viewLifecycleOwner, Observer { it ->
             Log.d("WTF", "CODE:$it")
             when(it){
                 1 -> showToast(view.context, "New jog added")
                 2 -> showToast(view.context, "Please pick date")
                 3 -> showToast(view.context, "Network Error")
+                4 -> showToast(view.context, "Updated jog")
                 else -> {}
             }
             if(it > 0)
@@ -97,8 +99,24 @@ class AddNewRunFragment : Fragment() {
             }
         })
 
+        viewModel.distance.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+                view.distance.setText(it)
+            }
+        })
+
+        viewModel.time.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+                view.time.setText(it)
+            }
+        })
 
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.clearValues()
     }
 
     fun showToast(context: Context, string: String){

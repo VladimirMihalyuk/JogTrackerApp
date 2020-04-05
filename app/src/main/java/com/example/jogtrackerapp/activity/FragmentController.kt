@@ -3,7 +3,7 @@ package com.example.jogtrackerapp.activity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.jogtrackerapp.addNewRun.AddNewRunFragment
+import com.example.jogtrackerapp.addNewRunOrUpdate.AddNewRunOrUpdateFragment
 import com.example.jogtrackerapp.allRuns.AllRunsFragment
 import com.example.jogtrackerapp.logging.LoggingFragment
 
@@ -25,7 +25,7 @@ class FragmentController {
     }
 
     fun openAddNewFragment(){
-        pushNextFragment(AddNewRunFragment())
+        pushNextFragment(AddNewRunOrUpdateFragment())
     }
 
 
