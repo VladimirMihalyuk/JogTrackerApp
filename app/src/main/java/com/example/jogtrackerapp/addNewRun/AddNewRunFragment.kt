@@ -2,11 +2,14 @@ package com.example.jogtrackerapp.addNewRun
 
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.jogtrackerapp.R
 import com.example.jogtrackerapp.activity.MainActivity
@@ -61,8 +64,45 @@ class AddNewRunFragment : Fragment() {
             viewModel.addNewJog(view.time.text.toString(), view.distance.text.toString())
         }
 
+        //0 - Empty
+        //1 - Ok
+        //2 - No date
+        //3 - Network error
+        viewModel.operationCode.observe(viewLifecycleOwner, Observer { it ->
+            Log.d("WTF", "CODE:$it")
+            when(it){
+                1 -> showToast(view.context, "New jog added")
+                2 -> showToast(view.context, "Please pick date")
+                3 -> showToast(view.context, "Network Error")
+                else -> {}
+            }
+            if(it > 0)
+                viewModel.resetCode()
+
+        })
+
+        viewModel.validTime.observe(viewLifecycleOwner, Observer {
+            if(it){
+                view.timeLayout.isErrorEnabled = false
+            }else{
+                view.timeLayout.error = "Wrong value"
+            }
+        })
+
+        viewModel.validDistance.observe(viewLifecycleOwner, Observer{
+            if(it){
+                view.distanceLayout.isErrorEnabled = false
+            }else{
+                view.distanceLayout.error = "Wrong value"
+            }
+        })
+
 
         return view
+    }
+
+    fun showToast(context: Context, string: String){
+        Toast.makeText(context, string, Toast.LENGTH_SHORT).show()
     }
 
 
