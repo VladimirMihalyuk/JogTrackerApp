@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_add_new_run.view.*
 import java.util.*
 import javax.inject.Inject
 import androidx.lifecycle.Observer
+import com.example.jogtrackerapp.logging.LoggingViewModel
+import com.example.jogtrackerapp.netwok.models.api.JogsItem
 
 /**
  * A simple [Fragment] subclass.
@@ -33,7 +35,7 @@ class AddNewRunOrUpdateFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel:AllRunsViewModel
+    lateinit var viewModel:AddNewRunOrUpdateFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +45,15 @@ class AddNewRunOrUpdateFragment : Fragment() {
 
         ((activity as MainActivity).application as JogApplication).appComponent.inject(this)
 
-        viewModel = activity?.run {
-            ViewModelProvider(this, viewModelFactory)[AllRunsViewModel::class.java]
-        }?: throw Exception("Invalid Activity")
+        viewModel =  ViewModelProvider(this, viewModelFactory)
+        .get(AddNewRunOrUpdateFragmentViewModel::class.java)
+
+        val jogsItem = arguments?.getParcelable(KEY_TEXT) as JogsItem?
+        if(jogsItem != null){
+            viewModel.setJog(jogsItem)
+        }
+
+
 
         viewModel.dateString.observe(viewLifecycleOwner, Observer {
             view.dateText.text = it
@@ -113,15 +121,25 @@ class AddNewRunOrUpdateFragment : Fragment() {
 
         return view
     }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.clearValues()
-    }
+    
 
     fun showToast(context: Context, string: String){
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show()
     }
 
+
+    companion object {
+        private val KEY_TEXT = "special_text"
+
+        fun newInstance(jogsItem: JogsItem?): AddNewRunOrUpdateFragment {
+            val fragment = AddNewRunOrUpdateFragment()
+            val args = Bundle()
+            args.putParcelable(KEY_TEXT, jogsItem)
+            fragment.arguments = args
+            return fragment
+
+        }
+
+    }
 
 }

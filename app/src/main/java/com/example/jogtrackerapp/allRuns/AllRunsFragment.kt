@@ -42,13 +42,11 @@ class AllRunsFragment : Fragment() {
         constraintLayout = view.constraintLayout
         progressBar = view.progressBar
 
-        viewModel = activity?.run {
-            ViewModelProvider(this, viewModelFactory)[AllRunsViewModel::class.java]
-        }?: throw Exception("Invalid Activity")
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(AllRunsViewModel::class.java)
 
         recyclerAdaptor = RecyclerAdaptor(){it ->
-            (activity as MainActivity).fragmentController.openAddNewFragment()
-            viewModel.setJog(it)
+            (activity as MainActivity).fragmentController.openAddNewFragment(it)
         }
 
         view.list.adapter = recyclerAdaptor
@@ -72,7 +70,7 @@ class AllRunsFragment : Fragment() {
 
 
         view.addNew.setOnClickListener{
-            (activity as MainActivity).fragmentController.openAddNewFragment()
+            (activity as MainActivity).fragmentController.openAddNewFragment(null)
         }
 
         return view
