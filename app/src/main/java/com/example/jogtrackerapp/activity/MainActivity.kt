@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .addToBackStack(null)
+            .setCustomAnimations(
+                R.animator.slide_in_left, R.animator.slide_out_left,
+                R.animator.slide_out_right, R.animator.slide_in_right
+            )
             .replace(
                 R.id.base_fragment_layout, fragment
             )

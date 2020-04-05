@@ -20,6 +20,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:clickable="true"
+            app:backgroundTint="@color/primaryDarkColor"
             android:src="@android:drawable/ic_input_add"
             app:layout_constraintBottom_toBottomOf="@+id/list"
             app:layout_constraintEnd_toEndOf="parent" />
