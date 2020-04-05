@@ -1,4 +1,4 @@
-package com.example.jogtrackerapp
+package com.example.jogtrackerapp.activity
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData

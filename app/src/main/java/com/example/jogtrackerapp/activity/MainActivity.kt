@@ -1,26 +1,29 @@
-package com.example.jogtrackerapp
+package com.example.jogtrackerapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.example.jogtrackerapp.R
+import com.example.jogtrackerapp.app.SharedPreferencesWrapper
 import com.example.jogtrackerapp.logging.LoggingFragment
 
 
 class MainActivity : AppCompatActivity() {
-    val fragmentController: FragmentController = FragmentController()
+    val fragmentController: FragmentController =
+        FragmentController()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val spWrapper = SharedPreferencesWrapper(application)
+
         fragmentController.nextFragment.observe(this, Observer<Fragment> {
             if (it is LoggingFragment) {
                 showDefaultFragment(it)
             } else {
-                Log.d("WTF", "SHIT")
                 showFragment(it)
             }
         })
