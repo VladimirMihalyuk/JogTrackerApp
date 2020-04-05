@@ -12,7 +12,7 @@ import com.example.jogtrackerapp.app.getDate
 import com.example.jogtrackerapp.app.parseToTime
 import com.example.jogtrackerapp.netwok.models.api.JogsItem
 
-class RecyclerAdaptor(): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
+class RecyclerAdaptor(private val callback: (JogsItem) -> Unit): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
     DiffCallback()
 ){
 
@@ -24,7 +24,7 @@ class RecyclerAdaptor(): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), callback)
     }
 
 
@@ -33,10 +33,13 @@ class RecyclerAdaptor(): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
         private val distance: TextView = itemView.findViewById(R.id.distance)
         private val date: TextView = itemView.findViewById(R.id.date)
 
-        fun bind(jogsItem: JogsItem){
-            distance.text = "Distancee: ${jogsItem?.distance ?: 0} m"
-            time.text = "Time: ${(jogsItem?.time ?: 0).parseToTime()}"
-            date.text = "Date: ${(jogsItem?.date ?: 0).getDate()}"
+        fun bind(jogsItem: JogsItem, callback: (JogsItem) -> Unit){
+            distance.text = "Distancee: ${jogsItem.distance ?: 0} m"
+            time.text = "Time: ${(jogsItem.time ?: 0).parseToTime()}"
+            date.text = "Date: ${((jogsItem.date ?: 0) * 1000).getDate()}"
+            itemView.setOnClickListener {
+                callback.invoke(jogsItem)
+            }
         }
     }
 }

@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val spWrapper = SharedPreferencesWrapper(application)
-
         fragmentController.nextFragment.observe(this, Observer<Fragment> {
             if (it is LoggingFragment) {
                 showDefaultFragment(it)

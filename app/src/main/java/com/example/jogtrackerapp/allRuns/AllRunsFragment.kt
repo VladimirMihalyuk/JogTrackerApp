@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.jogtrackerapp.activity.MainActivity
 
 import com.example.jogtrackerapp.R
@@ -27,7 +28,7 @@ class AllRunsFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel:AllRunsViewModel
-    val recyclerAdaptor = RecyclerAdaptor()
+    lateinit var recyclerAdaptor:RecyclerAdaptor
     lateinit var constraintLayout:ConstraintLayout
     lateinit var progressBar: ProgressBar
 
@@ -41,15 +42,17 @@ class AllRunsFragment : Fragment() {
         constraintLayout = view.constraintLayout
         progressBar = view.progressBar
 
-        view.list.adapter = recyclerAdaptor
-
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(AllRunsViewModel::class.java)
 
+        recyclerAdaptor = RecyclerAdaptor(){it ->
+            (activity as MainActivity).fragmentController.openAddNewFragment(it)
+        }
+
+        view.list.adapter = recyclerAdaptor
 
         viewModel.allRuns.observe(viewLifecycleOwner, Observer {
             if(it != null){
-                Log.d("WTF", "$it")
                 recyclerAdaptor.submitList(it)
             }
         })
@@ -65,6 +68,10 @@ class AllRunsFragment : Fragment() {
 
         viewModel.loadAllRuns()
 
+
+        view.addNew.setOnClickListener{
+            (activity as MainActivity).fragmentController.openAddNewFragment(null)
+        }
 
         return view
     }

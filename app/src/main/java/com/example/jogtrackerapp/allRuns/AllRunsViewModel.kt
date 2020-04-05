@@ -1,9 +1,9 @@
 package com.example.jogtrackerapp.allRuns
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.jogtrackerapp.app.dateToMillis
+import com.example.jogtrackerapp.app.getDate
 import com.example.jogtrackerapp.netwok.joggingApi.JoggingInterface
 import com.example.jogtrackerapp.netwok.models.api.JogsItem
 import kotlinx.coroutines.Dispatchers
@@ -34,4 +34,5 @@ class AllRunsViewModel @Inject constructor(private val joggingInterface: Jogging
             }
         }
     }
+
 }

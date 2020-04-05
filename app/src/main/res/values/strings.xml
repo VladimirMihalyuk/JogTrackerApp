@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="distance">Distance in metres</string>
+    <string name="time">Time in seconds</string>
+    <string name="add_update">Add/Update</string>
+    <string name="pick_date">Pick date</string>
 </resources>

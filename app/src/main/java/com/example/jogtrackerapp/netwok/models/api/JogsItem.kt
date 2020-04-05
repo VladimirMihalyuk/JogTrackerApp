@@ -1,9 +1,11 @@
 package com.example.jogtrackerapp.netwok.models.api
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class JogsItem(
 
 	@field:SerializedName("date")
@@ -20,4 +22,4 @@ data class JogsItem(
 
 	@field:SerializedName("time")
 	val time: Int? = null
-)
+): Parcelable
