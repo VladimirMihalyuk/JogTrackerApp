@@ -18,12 +18,18 @@ class AllRunsViewModel @Inject constructor(private val joggingInterface: Jogging
     val allRuns: LiveData<List<JogsItem>>
         get() = _allRuns
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading:LiveData<Boolean>
+        get() = _loading
+
     fun loadAllRuns(){
+        _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val response = joggingInterface.getData().await()
             if(response.isSuccessful){
                 response.body()?.response?.jogs?.let{
                     _allRuns.postValue(it)
+                    _loading.postValue(false)
                 }
             }
         }
