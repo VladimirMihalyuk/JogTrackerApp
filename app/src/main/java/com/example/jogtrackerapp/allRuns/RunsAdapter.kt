@@ -15,8 +15,6 @@ import com.example.jogtrackerapp.netwok.models.api.JogsItem
 class RecyclerAdaptor(private val callback: (JogsItem) -> Unit): ListAdapter<JogsItem, RecyclerAdaptor.ViewHolder>(
     DiffCallback()
 ){
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item, parent, false)
@@ -43,7 +41,6 @@ class RecyclerAdaptor(private val callback: (JogsItem) -> Unit): ListAdapter<Jog
         }
     }
 }
-
 
 private class DiffCallback : DiffUtil.ItemCallback<JogsItem>() {
     override fun areItemsTheSame(oldItem: JogsItem, newItem: JogsItem): Boolean {

@@ -111,9 +111,7 @@ class AddNewRunOrUpdateFragmentViewModel @Inject constructor(private val jogging
 
                     }
                 }
-
             }
-
         }
     }
 }

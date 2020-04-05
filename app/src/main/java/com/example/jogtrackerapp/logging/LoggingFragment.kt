@@ -56,9 +56,6 @@ class LoggingFragment : Fragment() {
             }
 
         })
-
         return view
     }
-
-
 }

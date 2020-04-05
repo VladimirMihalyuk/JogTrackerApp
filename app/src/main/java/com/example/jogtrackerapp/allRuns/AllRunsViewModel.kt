@@ -34,5 +34,4 @@ class AllRunsViewModel @Inject constructor(private val joggingInterface: Jogging
             }
         }
     }
-
 }

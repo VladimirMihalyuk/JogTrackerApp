@@ -78,7 +78,6 @@ class AddNewRunOrUpdateFragment : Fragment() {
         //3 - Network error
         //4 - Ok update
         viewModel.operationCode.observe(viewLifecycleOwner, Observer { it ->
-            Log.d("WTF", "CODE:$it")
             when(it){
                 1 -> showToast(view.context, "New jog added")
                 2 -> showToast(view.context, "Please pick date")
@@ -118,7 +117,6 @@ class AddNewRunOrUpdateFragment : Fragment() {
                 view.time.setText(it)
             }
         })
-
         return view
     }
     
@@ -139,7 +137,5 @@ class AddNewRunOrUpdateFragment : Fragment() {
             return fragment
 
         }
-
     }
-
 }
